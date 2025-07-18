@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Folga do Vulkano</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .mensagem {
+      font-size: 3rem;
+      padding: 20px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .emoji {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="mensagem" class="mensagem"></div>
+
+  <script>
+    const hoje = new Date();
+    const dia = hoje.getDate();
+    const msgEl = document.getElementById('mensagem');
+
+    if (dia % 2 === 0) {
+      // Dias pares: folga
+      msgEl.innerHTML = `<span class="emoji">🔥</span>Vulkano Está de folga<br><small>(Estarei de folga nos dias pares deste mês!)</small>`;
+    } else {
+      // Dias ímpares: trabalho
+      msgEl.innerHTML = `<span class="emoji">💼</span>Hoje é dia ímpar.<br>Vulkano está trabalhando!`;
+    }
+  </script>
+</body>
+</html>
