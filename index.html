@@ -3,6 +3,171 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Folgas do Vulkano</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      background-color: #f4f4f4;
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .banner {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 20px 30px;
+      border-radius: 12px;
+      background-color: #eaeaea;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .banner h1 {
+      margin: 0;
+      font-size: 2.2rem;
+    }
+
+    .banner p {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .day {
+      text-align: center;
+      padding: 14px 0;
+      border-radius: 8px;
+      font-size: 1rem;
+      background-color: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      position: relative;
+      cursor: default;
+    }
+
+    .header {
+      font-weight: bold;
+      background: transparent;
+      box-shadow: none;
+      color: #777;
+    }
+
+    .folga {
+      background-color: #d1d1d1;
+      font-weight: 500;
+      color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tooltip::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: white;
+      padding: 5px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .tooltip:hover::after {
+      opacity: 1;
+    }
+
+    .invisivel {
+      visibility: hidden;
+    }
+
+    @media (max-width: 480px) {
+      .banner h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="banner" id="statusHoje"></div>
+  <div class="calendar" id="calendar"></div>
+
+  <script>
+    const hoje = new Date();
+    const dia = hoje.getDate();
+    const mes = hoje.getMonth();
+    const ano = hoje.getFullYear();
+
+    const statusEl = document.getElementById("statusHoje");
+    const calendarEl = document.getElementById("calendar");
+
+    const isFolga = dia % 2 === 0;
+
+    statusEl.innerHTML = `
+      <h1>${isFolga ? "✔️ Vulkano Está de Folga" : "💼 Vulkano Está Trabalhando"}</h1>
+      <p>${isFolga ? "Hoje é um dia par — dia de descanso!" : "Hoje é um dia ímpar — foco total no trabalho."}</p>
+    `;
+
+    const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    const primeiroDia = new Date(ano, mes, 1).getDay();
+    const totalDias = new Date(ano, mes + 1, 0).getDate();
+
+    // Cabeçalhos
+    diasSemana.forEach(dia => {
+      const el = document.createElement('div');
+      el.className = 'day header';
+      el.textContent = dia;
+      calendarEl.appendChild(el);
+    });
+
+    // Espaços antes do 1º dia
+    for (let i = 0; i < primeiroDia; i++) {
+      const el = document.createElement('div');
+      el.className = 'day invisivel';
+      calendarEl.appendChild(el);
+    }
+
+    // Dias do mês
+    for (let d = 1; d <= totalDias; d++) {
+      const el = document.createElement('div');
+      el.className = 'day tooltip';
+
+      if (d % 2 === 0) {
+        el.classList.add('folga');
+        el.innerHTML = `✔️ <strong>${d}</strong>`;
+        el.setAttribute('data-tooltip', 'Dia de folga');
+      } else {
+        el.textContent = d;
+        el.setAttribute('data-tooltip', 'ainn minha bucetinha');
+      }
+
+      calendarEl.appendChild(el);
+    }
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Calendário de Folgas - Vulkano</title>
   <style>
     body {
